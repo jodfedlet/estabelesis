@@ -30,7 +30,14 @@ const authenticationService = {
             expiresIn: process.env.TOKEN_EXPIRATION
         });
 
-        return res.json({ token })
+        return res.json({ 
+            token, 
+            user: {
+                id,
+                name: user.name,
+                email
+            }
+        })
     }
 
 }

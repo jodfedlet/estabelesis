@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 
 import "./src/database"
 
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 
 const app = express();
 
