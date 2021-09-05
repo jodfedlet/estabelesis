@@ -4,14 +4,32 @@ import Sequelize from 'sequelize';
 const operadores = Sequelize.Op;
 
 const estabelecimentoService = {
+
     async index(req, res){
         const estabelecimentos = await Estabelecimento.findAll();
-        return res.json(estabelecimentos);
+
+        const estabelecimentosFormatados = estabelecimentos.map(estabelecimento => {
+            return {
+                id: estabelecimento.id,
+                name: estabelecimento.name,
+                email: estabelecimento.email,
+                director: estabelecimento.director,
+                logo: estabelecimento.logo, 
+                localization: estabelecimento.localization,
+                created_at: estabelecimento.created_at,
+                updated_at: estabelecimento.updated_at,
+                request:{
+                    type:'GET',
+                    url: `${process.env.APP_BASE_URL}/estabelecimentos/${estabelecimento.id}`
+                }
+            }
+        })
+        return res.json(estabelecimentosFormatados);
     },
 
     async store(req, res){
         const { name, email, phone, director, localization } = req.body;
-        const estabelecimento = await Estabelecimento.create({
+        await Estabelecimento.create({
             name,
             email,
             phone,
@@ -19,7 +37,7 @@ const estabelecimentoService = {
             localization,
             logo: req.file.path
         });
-        return res.json(estabelecimento);
+        return res.json({message: 'Estabelecimento criado com sucesso'});
     },
 
     async show(req, res){
@@ -39,7 +57,22 @@ const estabelecimentoService = {
             });
         }
 
-        return res.json(estabelecimento);
+        const response = {
+            id: estabelecimento.id,
+            name: estabelecimento.name,
+            email: estabelecimento.email,
+            director: estabelecimento.director,
+            logo: estabelecimento.logo, 
+            localization: estabelecimento.localization,
+            created_at: estabelecimento.created_at,
+            updated_at: estabelecimento.updated_at,
+            request:{
+                type:'GET',
+                url: `${process.env.APP_BASE_URL}/estabelecimentos/${estabelecimento.id}`
+            }
+        }
+
+        return res.json(response);
     },
 
     async update(req, res){
@@ -63,9 +96,9 @@ const estabelecimentoService = {
             req.body.logo = req.file.path;
         }
 
-        const estabelecimentoAtualizado = await estabelecimento.update(req.body);
+        await estabelecimento.update(req.body);
 
-        return res.json(estabelecimentoAtualizado);
+        return res.json({message: 'Estabelecimento atualizado com sucesso'});
     },
 
     async delete(req, res){
