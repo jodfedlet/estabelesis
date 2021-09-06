@@ -59,6 +59,9 @@ Print do projeto em: ./print_
 API
 
 -Autenticação
+Dados padrões:
+email: johndoe@gmail.com
+password: estabelesis
 
 endpoint: BASE_URL/auth/login
 Method: GET
