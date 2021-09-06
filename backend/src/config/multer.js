@@ -16,7 +16,7 @@ export default {
         if(["image/jpeg", "image/png"].includes(file.mimetype)){
             cb(null, true)
         }else{
-            cb(null, false)
+            cb(null, "Extensão não permitida")
         }
     },
 

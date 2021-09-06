@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Title, Form } from './styled';
+import { Form } from './styled';
 
 import { useDispatch } from 'react-redux';
 

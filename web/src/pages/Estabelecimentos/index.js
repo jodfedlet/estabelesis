@@ -100,8 +100,14 @@ export default function Estabelecimentos(){
 
                     <NovoEstabelecimento to='/estabelecimento'>Novo</NovoEstabelecimento>
                 </ButtonAndSearch>
+
+                {estabelecimentos.length < 1 ?
                 
-                <EstabelecimentoContainer>
+                    <div>
+                       <p type="submit">Nenhum registro foi encontrado</p>
+                    </div>
+                
+                : <EstabelecimentoContainer>
                 <table>
                     <caption> <h1>Estabelecimentos</h1></caption>
                     <thead>
@@ -149,6 +155,7 @@ export default function Estabelecimentos(){
                     </table>
                 
                 </EstabelecimentoContainer>
+                 }
             </>
     );
 }

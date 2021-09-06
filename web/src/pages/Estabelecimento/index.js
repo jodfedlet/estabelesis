@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import api from '../../services/api';
 import history from '../../services/history';
 import Loading from '../../components/Loading';
+import { isEmail } from 'validator';
 
 import { Container } from '../../styleGlobal';
 import { useSelector } from 'react-redux';
@@ -53,62 +54,74 @@ export default function Estabelecimento({ match }){
 
     const handleSubmit =  async e => {
         e.preventDefault();
-        
-        let formData = new FormData();
-        formData.append('logo', logo);
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('director', director);
-        formData.append('localization',localization);
-        formData.append('phone',phone);
 
-        try{
-            setIsLoading(true)
-           
-           /*
-            const headers = {
-                'Content-Type': 'multipart/form-data',
-                'Authorization':`Bearer ${token}` 
-            }
-            */
+        console.log(logo)
 
-            if(id){
-               // const response = await api.put(`/estabelecimentos/${id}`,formData, headers)
-               const { data } = await axios({
-                method: 'PUT',
-                url: `http://localhost:3333/estabelecimentos/${id}`,
-                data: formData,
-                mode: 'no-cors',
-                headers:  {
-                    'processData': false,
-                    'Content-Type':false,
+        if(!logo){
+            toast.error('Logo é obrigatório')
+        }else if(!isEmail(email) || !email){
+            toast.error('Email inválido')
+        }else if(!director){
+            toast.error('Diretor é obrigatório')
+        }else if(!localization){
+            toast.error('Localização é inválida')
+        }else if(!phone || phone.length < 8){
+            toast.error('Telefone é inválido')
+        }else{
+            let formData = new FormData();
+            formData.append('logo', logo);
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('director', director);
+            formData.append('localization',localization);
+            formData.append('phone',phone);
+
+            try{
+                setIsLoading(true)
+            
+            /*
+                const headers = {
+                    'Content-Type': 'multipart/form-data',
                     'Authorization':`Bearer ${token}` 
-                } 
-                })
-                console.log(data.response)
-                toast.success(data.response)
-            }else{
-               // const response = await api.post(`/estabelecimentos`,formData, headers)
-               const response = await axios({
-                method: 'POST',
-                url: 'http://localhost:3333/estabelecimentos',
-                data: formData,
-                mode: 'no-cors',
-                headers:  {
-                    'processData': false,
-                    'Content-Type':false,
-                    'Authorization':`Bearer ${token}` 
-                } 
-                })
-                console.log(response)
-                //toast.success(data.response)
+                }
+                */
+
+                if(id){
+                // const response = await api.put(`/estabelecimentos/${id}`,formData, headers)
+                const { data } = await axios({
+                    method: 'PUT',
+                    url: `http://localhost:3333/estabelecimentos/${id}`,
+                    data: formData,
+                    mode: 'no-cors',
+                    headers:  {
+                        'processData': false,
+                        'Content-Type':false,
+                        'Authorization':`Bearer ${token}` 
+                    } 
+                    })
+                    console.log(data.response)
+                    toast.success(data.response)
+                }else{
+                // const response = await api.post(`/estabelecimentos`,formData, headers)
+                const response = await axios({
+                    method: 'POST',
+                    url: 'http://localhost:3333/estabelecimentos',
+                    data: formData,
+                    mode: 'no-cors',
+                    headers:  {
+                        'processData': false,
+                        'Content-Type':false,
+                        'Authorization':`Bearer ${token}` 
+                    } 
+                    })
+                    toast.success(response.data.response)
+                }
+                setIsLoading(false)
+                history.push('/estabelecimentos')
+            }catch(err){
+                setIsLoading(false)
+                toast.error(err.response.data.errors[0]); 
             }
-            setIsLoading(false)
-            history.push('/estabelecimentos')
-        }catch(err){
-            console.log(err)
-            setIsLoading(false)
-            //toast.error(err.response.data.errors[0]); 
         }
     }
 
