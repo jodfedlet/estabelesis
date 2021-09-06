@@ -13,7 +13,7 @@ const router = Router();
 
 router.post('/auth/login', AuthenticationController.login);
 
-router.get('/estabelecimentos', EstabelecimentoController.index);
+router.get('/estabelecimentos', AuthMiddleware, EstabelecimentoController.index);
 router.post('/estabelecimentos', AuthMiddleware, upload.single("logo"), EstabelecimentoController.create);
 router.get('/estabelecimentos/:id', AuthMiddleware, EstabelecimentoController.show);
 router.put('/estabelecimentos/:id', AuthMiddleware, upload.single("logo"), EstabelecimentoController.update);

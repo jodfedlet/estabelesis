@@ -38,7 +38,7 @@ const estabelecimentoService = {
             localization,
             logo: req.file.path
         });
-        return res.json({message: 'Estabelecimento criado com sucesso'});
+        return res.json({response: 'Estabelecimento criado com sucesso'});
     },
 
     async show(req, res){
@@ -100,7 +100,7 @@ const estabelecimentoService = {
 
         await estabelecimento.update(req.body);
 
-        return res.json({message: 'Estabelecimento atualizado com sucesso'});
+        return res.json({response: 'Estabelecimento atualizado com sucesso'});
     },
 
     async delete(req, res){
