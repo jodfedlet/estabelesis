@@ -4,7 +4,7 @@
   "description": "API para o sistema de gerenciamento de estabelecimento",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon server.js"
   },
   "author": "Jod F. Pierre",
@@ -17,13 +17,15 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
+    "jest": "^27.1.0",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.3",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.0",
     "nodemon": "^2.0.12",
     "path": "^0.12.7",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "supertest": "^6.1.6"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
