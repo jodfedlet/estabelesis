@@ -13,6 +13,7 @@ function* loginRequest({payload}){
         yield put(actions.loginSuccess({...response.data}))
         toast.success('Login realizado com sucesso!');
         api.defaults.headers.Authorization = `Bearer ${response.data.token}`
+       
         if(payload.prevPath === '/'){
             history.push('/estabelecimentos');
         }else{

@@ -31,6 +31,7 @@ export default function Login(props){
     }
     return (
         <Container>
+            <div>
             <h1>Login</h1>
             <Form onSubmit={handleSubmit}>
                 <input 
@@ -49,6 +50,7 @@ export default function Login(props){
                 />
                 <button type="submit" >Conectar</button>
             </Form>
+            </div>
         </Container>
     );
 }

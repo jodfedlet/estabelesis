@@ -1,5 +1,4 @@
 import React, { useEffect, useState} from 'react';
-import { Container } from '../../styleGlobal';
 import api from '../../services/api';
 import Header from '../../components/Header';
 import { toast } from 'react-toastify';
@@ -13,8 +12,12 @@ import {
 import { get } from 'lodash';
 import { FaUserCircle, FaEdit, FaWindowClose } from 'react-icons/fa';
 import Loading from '../../components/Loading';
+import { useSelector } from 'react-redux';
+
 
 export default function Estabelecimentos(){
+
+    const token = useSelector(state => state.authReducer.token);
 
     const [estabelecimentos, setEstabelecimentos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -24,10 +27,13 @@ export default function Estabelecimentos(){
         async function getEstabelecimentos(){
             try{
                 setIsLoading(true)
-                const response = await api.get('/estabelecimentos');
+                const response = await api.get('/estabelecimentos', {
+                    headers: {"Authorization" : `Bearer ${token}`}
+                });
                 setEstabelecimentos(response.data)
                 setIsLoading(false)
             }catch(err){
+                setIsLoading(false)
                 toast.error(err.response.data.errors[0]);  
             }
         }
@@ -43,12 +49,16 @@ export default function Estabelecimentos(){
         }
 
         try{
-            const response = await api.delete(`/estabelecimentos/${id}`)
+            setIsLoading(true);
+            const response = await api.delete(`/estabelecimentos/${id}`,{
+                headers: {"Authorization" : `Bearer ${token}`}
+            })
             toast.success(response.data.response); 
             const allEstabelecimentos = [...estabelecimentos]
             setEstabelecimentos(allEstabelecimentos.filter(estabelecimento => estabelecimento.id !== id));
-
+            setIsLoading(false)
         }catch(err){
+            setIsLoading(false)
             toast.error(err.response.data.errors[0]);  
         }
     }
@@ -61,7 +71,9 @@ export default function Estabelecimentos(){
         }else{
             try{
                 setIsLoading(true)
-                const response = await api.get(`/estabelecimentos/localization/${search}`);
+                const response = await api.get(`/estabelecimentos/localization/${search}`,{
+                    headers: {"Authorization" : `Bearer ${token}`}
+                });
                 setEstabelecimentos(response.data)
                 setIsLoading(false)
             }catch(err){
@@ -71,11 +83,10 @@ export default function Estabelecimentos(){
     }
 
     return (
-            <Container>
-
+            <>
                 <Header/>
                 <Loading isLoading={isLoading} />
-                <h1>Estabelecimentos</h1>
+                <br></br>
                 <ButtonAndSearch>
                     <div>
                         <input
@@ -91,34 +102,51 @@ export default function Estabelecimentos(){
                 </ButtonAndSearch>
                 
                 <EstabelecimentoContainer>
-                {estabelecimentos.map(estabelecimento => (
-                        <div key={String(estabelecimento.id)}>
-                            <span>{estabelecimento.id}</span>
-                            <EstabelecimentoLogo>
+                <table>
+                    <caption> <h1>Estabelecimentos</h1></caption>
+                    <thead>
+                        <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Logo</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Diretor</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Localização</th>
+                        <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    {estabelecimentos.map(estabelecimento => (
+                         <tr key={String(estabelecimento.id)}>
+                         <td data-label="ID">{estabelecimento.id}</td>
+                         <td data-label="Logo">
                                 {get(estabelecimento,'logoo', false) ? (
                                     <img src={estabelecimento.logo} alt=''/>
                                 ) : (
                                     <FaUserCircle size={30}/>
                                 )}
-                            </EstabelecimentoLogo>
-
-                            <span>{estabelecimento.name}</span>
-                            <span>{estabelecimento.email}</span>
-                            <span>{estabelecimento.director}</span>
-                            <span>{estabelecimento.phone}</span>
-                            <span>{estabelecimento.localization}</span>
-
-                            
-                        
+                         </td>
+                         <td data-label="Nome">{estabelecimento.name}</td>
+                         <td data-label="Email">{estabelecimento.email}</td>
+                         <td data-label="Diretor">{estabelecimento.director}</td>
+                         <td data-label="Telefone">{estabelecimento.phone}</td>
+                         <td data-label="Localização">{estabelecimento.localization}</td>
+                         <td data-label="Ações">
                             <Link to={`/estabelecimento/${estabelecimento.id}`}>
-                                <FaEdit size={18}/>
-                            </Link>
+                                    <FaEdit size={18}/>
+                             </Link>
                             <Link onClick={(e => handleDelete(e, estabelecimento.id))} to={`/estabelecimento/${estabelecimento.id}`}>
                                 <FaWindowClose size={18}/>
                             </Link>
-                        </div>
+                         </td>
+                         </tr>
                     ))}
+                    </tbody>
+                    </table>
+                
                 </EstabelecimentoContainer>
-            </Container>
+            </>
     );
 }

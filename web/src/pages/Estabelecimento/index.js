@@ -7,8 +7,12 @@ import history from '../../services/history';
 import Loading from '../../components/Loading';
 
 import { Container } from '../../styleGlobal';
+import { useSelector } from 'react-redux';
+import axios from 'axios'
 
 export default function Estabelecimento({ match }){
+
+    const token = useSelector(state => state.authReducer.token);
 
     const id = get(match, 'params.id', 0);
 
@@ -27,7 +31,9 @@ export default function Estabelecimento({ match }){
         async function getEstabelecimento(){
             try{
                 setIsLoading(true)
-                const { data } = await api.get(`/estabelecimentos/${id}`);
+                const { data } = await api.get(`/estabelecimentos/${id}`,{
+                    headers: {"Authorization" : `Bearer ${token}`}
+                });
                 setName(data.name)
                 setEmail(data.email)
                 setDirector(data.director)
@@ -54,24 +60,54 @@ export default function Estabelecimento({ match }){
         formData.append('director', director);
         formData.append('localization',localization);
         formData.append('phone',phone);
-       
+
         try{
             setIsLoading(true)
+           
+           /*
             const headers = {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'Authorization':`Bearer ${token}` 
             }
+            */
+
             if(id){
-                const { data } = await api.put(`/estabelecimentos/${id}`,formData, headers)
+               // const response = await api.put(`/estabelecimentos/${id}`,formData, headers)
+               const { data } = await axios({
+                method: 'PUT',
+                url: `http://localhost:3333/estabelecimentos/${id}`,
+                data: formData,
+                mode: 'no-cors',
+                headers:  {
+                    'processData': false,
+                    'Content-Type':false,
+                    'Authorization':`Bearer ${token}` 
+                } 
+                })
+                console.log(data.response)
                 toast.success(data.response)
             }else{
-                const { data } = await api.post(`/estabelecimentos`,formData, headers)
-                toast.success(data.response)
+               // const response = await api.post(`/estabelecimentos`,formData, headers)
+               const response = await axios({
+                method: 'POST',
+                url: 'http://localhost:3333/estabelecimentos',
+                data: formData,
+                mode: 'no-cors',
+                headers:  {
+                    'processData': false,
+                    'Content-Type':false,
+                    'Authorization':`Bearer ${token}` 
+                } 
+                })
+                console.log(response)
+                //toast.success(data.response)
             }
             setIsLoading(false)
             history.push('/estabelecimentos')
         }catch(err){
+            console.log(err)
             setIsLoading(false)
-            toast.error(err.response.data.errors[0]); 
+            //toast.error(err.response.data.errors[0]); 
         }
     }
 
@@ -100,7 +136,6 @@ export default function Estabelecimento({ match }){
                 />
                     <input 
                     type="file" 
-                    required={true}
                     onChange={handleChange} 
                     placeholder="Escolhe um arquivo"   
                 />

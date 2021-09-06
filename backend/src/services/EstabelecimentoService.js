@@ -14,7 +14,7 @@ const estabelecimentoService = {
                 name: estabelecimento.name,
                 email: estabelecimento.email,
                 director: estabelecimento.director,
-                logo: estabelecimento.logo, 
+                logo: `${process.env.APP_BASE_URL}/uploads/${estabelecimento.logo}`,
                 localization: estabelecimento.localization,
                 phone: estabelecimento.phone,
                 created_at: estabelecimento.created_at,
@@ -36,7 +36,7 @@ const estabelecimentoService = {
             phone,
             director,
             localization,
-            logo: req.file.path
+            logo: req.file.filename
         });
         return res.json({response: 'Estabelecimento criado com sucesso'});
     },
@@ -63,7 +63,7 @@ const estabelecimentoService = {
             name: estabelecimento.name,
             email: estabelecimento.email,
             director: estabelecimento.director,
-            logo: estabelecimento.logo, 
+            logo: `${process.env.APP_BASE_URL}/uploads/${estabelecimento.logo}`, 
             localization: estabelecimento.localization,
             phone: estabelecimento.phone,
             created_at: estabelecimento.created_at,
@@ -94,8 +94,8 @@ const estabelecimentoService = {
             });
         }
 
-        if(req.file.path){
-            req.body.logo = req.file.path;
+        if(req.file.filename){
+            req.body.logo = req.file.filename;
         }
 
         await estabelecimento.update(req.body);
