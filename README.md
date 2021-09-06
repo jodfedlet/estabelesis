@@ -52,6 +52,9 @@ Para o front-end, entre no local ./web e digite npm start
 Por padrão, a API está rodando em: http://localhost:3333/ e a web em: http://localhost:3000/
 
 
+Print do projeto em: ./print_
+
+
 
 API
 
