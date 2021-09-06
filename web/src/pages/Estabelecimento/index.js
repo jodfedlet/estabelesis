@@ -9,6 +9,7 @@ import Loading from '../../components/Loading';
 import { Container } from '../../styleGlobal';
 import { useSelector } from 'react-redux';
 import axios from 'axios'
+import Header from '../../components/Header';
 
 export default function Estabelecimento({ match }){
 
@@ -118,6 +119,7 @@ export default function Estabelecimento({ match }){
     return (
         <Container>
             <Loading isLoading={isLoading}/>
+            <Header/>
             <h1>{id? 'Editar estabelecimento' :  'Novo estabelecimento'}</h1>
             <Form onSubmit={handleSubmit}>
             <input 

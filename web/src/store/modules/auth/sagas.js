@@ -13,12 +13,9 @@ function* loginRequest({payload}){
         yield put(actions.loginSuccess({...response.data}))
         toast.success('Login realizado com sucesso!');
         api.defaults.headers.Authorization = `Bearer ${response.data.token}`
-       
-        if(payload.prevPath === '/'){
-            history.push('/estabelecimentos');
-        }else{
-            history.push(payload.prevPath);
-        }
+        history.push('/estabelecimentos');
+        window.location.reload();
+      
         //history.push(payload.prevPath);
     }catch(e){
         toast.error('Email ou senha inválidos.');

@@ -81,10 +81,6 @@ table th {
   }
   
   table td::before {
-    /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
     content: attr(data-label);
     float: left;
     font-weight: bold;
@@ -94,17 +90,17 @@ table th {
   table td:last-child {
     border-bottom: 0;
   }
+
+  td .img{
+       width: 12px;
+       height: 36px;
+       border-radius: 50px;
+   }
 }
 
-
-/* general styling */
-body {
-  font-family: "Open Sans", sans-serif;
-  line-height: 1.25;
-}
 `;
 
-export const EstabelecimentoLogo = styled.div`
+export const EstabelecimentoLogo = styled.p`
    img{
        width: 36px;
        height: 36px;

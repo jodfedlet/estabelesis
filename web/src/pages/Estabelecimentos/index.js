@@ -122,11 +122,13 @@ export default function Estabelecimentos(){
                          <tr key={String(estabelecimento.id)}>
                          <td data-label="ID">{estabelecimento.id}</td>
                          <td data-label="Logo">
-                                {get(estabelecimento,'logoo', false) ? (
+                             <EstabelecimentoLogo>
+                                {get(estabelecimento,'logo', false) ? (
                                     <img src={estabelecimento.logo} alt=''/>
                                 ) : (
                                     <FaUserCircle size={30}/>
                                 )}
+                             </EstabelecimentoLogo>
                          </td>
                          <td data-label="Nome">{estabelecimento.name}</td>
                          <td data-label="Email">{estabelecimento.email}</td>

@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 
 export default function CustomRoute({component: Component, isLoginRequired, ...rest}){
     const isLoggedIn = useSelector(state => state.authReducer.isLoggedIn);
-
-    console.log(isLoginRequired , !isLoggedIn)
     if(isLoginRequired && !isLoggedIn){
         return (
             <Redirect 
@@ -18,9 +16,11 @@ export default function CustomRoute({component: Component, isLoginRequired, ...r
     return <Route {...rest} component={Component}/>
 }
 
+/*
 CustomRoute.defaultProps = {
-    isLoginRequired: false,
+    isLoginRequired: true,
 }
+*/
 
 CustomRoute.propTypes ={
     component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired,
