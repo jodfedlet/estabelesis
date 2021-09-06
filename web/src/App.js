@@ -1,10 +1,9 @@
 import React from 'react';
-import Login from './pages/Login';
-import Header from './components/Header';
 import { Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import Routes from './routes/routes';
 
 import GlobalStyle from './styleGlobal';
 import history from './services/history';
@@ -15,8 +14,7 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <Router history={history}>
-          <Header/>
-          <Login/>
+          <Routes/>
           <GlobalStyle/>
           <ToastContainer autoClose={3000} className='toast-container'/>
         </Router>

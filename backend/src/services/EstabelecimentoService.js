@@ -16,6 +16,7 @@ const estabelecimentoService = {
                 director: estabelecimento.director,
                 logo: estabelecimento.logo, 
                 localization: estabelecimento.localization,
+                phone: estabelecimento.phone,
                 created_at: estabelecimento.created_at,
                 updated_at: estabelecimento.updated_at,
                 request:{
@@ -64,6 +65,7 @@ const estabelecimentoService = {
             director: estabelecimento.director,
             logo: estabelecimento.logo, 
             localization: estabelecimento.localization,
+            phone: estabelecimento.phone,
             created_at: estabelecimento.created_at,
             updated_at: estabelecimento.updated_at,
             request:{

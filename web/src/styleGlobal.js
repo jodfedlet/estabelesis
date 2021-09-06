@@ -18,6 +18,7 @@ export default createGlobalStyle`
         font-family: sans-serif;
         background: ${colors.primaryDarkColor};
         color: ${colors.primaryColor};
+        height: 100%;
     }
 
     button {
@@ -41,7 +42,7 @@ export default createGlobalStyle`
 `;
 
 export const Container = styled.section`
-    max-width: 360px;
+    max-width: 95%;
     background: #fff;
     margin: 30px auto;
     padding: 30px;

@@ -1,17 +1,33 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 import Login from '../pages/Login';
+import Estabelecimento from '../pages/Estabelecimento';
+import Estabelecimentos from '../pages/Estabelecimentos';
 import CustomRoute from './CustomRoute';
-import { toast } from 'react-toastify';
 
 export default function Routes(){
-
-    toast.success('teste test etste');
     return(
         <Switch>
             <CustomRoute exact path="/" component={Login}/>
-            <CustomRoute exact path="/home" component={Login} />
-            <CustomRoute exact path="/logout" component={Login} />
+            <CustomRoute 
+                isLoginRequired
+                exact path="/estabelecimento/:id" 
+                component={Estabelecimento}
+             />
+            <CustomRoute 
+              isLoginRequired
+                exact path="/estabelecimento" 
+                component={Estabelecimento}
+             />
+            <CustomRoute 
+                isLoginRequired
+                exact path="/estabelecimentos" 
+                component={Estabelecimentos} 
+            />
+            <CustomRoute 
+                exact path="/logout" 
+                component={Login} 
+            />
             <CustomRoute path="*" component={Login}/>
         </Switch>
     );

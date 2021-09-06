@@ -7,7 +7,7 @@ export default reducers => {
         {
             key: 'Estabelesis',
             storage,
-            whitelist: ['firstReducer']
+            whitelist: ['authReducer']
         },
         reducers
     );
