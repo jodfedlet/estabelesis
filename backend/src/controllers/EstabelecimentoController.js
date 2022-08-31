@@ -2,9 +2,9 @@ import estabelecimentoService from "../services/EstabelecimentoService";
 
 
 const estabelecimentoController = {
-    index(req, res){
+    async index(req, res){
         try{
-            return estabelecimentoService.index(req, res);
+            return await estabelecimentoService.index(req, res);
         }catch(error){
             return res.statut(400).json({
                 errors: error.errors.map(err => err.message)
@@ -12,9 +12,9 @@ const estabelecimentoController = {
         }
     },
 
-    create(req, res){
+    async create(req, res){
         try{
-            return estabelecimentoService.store(req, res);
+            return await estabelecimentoService.store(req, res);
         }catch(error){
             return res.statut(400).json({
                 errors: error.errors.map(err => err.message)
@@ -22,9 +22,9 @@ const estabelecimentoController = {
         }
     },
 
-    show(req, res){
+    async show(req, res){
         try{
-            return estabelecimentoService.show(req, res);
+            return await estabelecimentoService.show(req, res);
         }catch(error){
             return res.statut(400).json({
                 errors: error.errors.map(err => err.message)
@@ -32,9 +32,9 @@ const estabelecimentoController = {
         }
     },
 
-    update(req, res){
+    async update(req, res){
         try{
-            return estabelecimentoService.update(req, res);
+            return await estabelecimentoService.update(req, res);
         }catch(error){
             return res.statut(400).json({
                 errors: error.errors.map(err => err.message)
@@ -42,9 +42,9 @@ const estabelecimentoController = {
         }
     },
 
-    delete(req, res){
+    async delete(req, res){
         try{
-            return estabelecimentoService.delete(req, res);
+            return await estabelecimentoService.delete(req, res);
         }catch(error){
             return res.statut(400).json({
                 errors: error.errors.map(err => err.message)
@@ -52,9 +52,9 @@ const estabelecimentoController = {
         }
     },
 
-    getByLocalization(req, res){
+    async getByLocalization(req, res){
         try{
-            return estabelecimentoService.getByLocalization(req, res);
+            return await estabelecimentoService.getByLocalization(req, res);
         }catch(error){
             return res.statut(400).json({
                 errors: error.errors.map(err => err.message)

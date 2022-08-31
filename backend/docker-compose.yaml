@@ -7,7 +7,7 @@ services:
           ports: 
               - 3000:3000
           volumes: 
-              - .:/usr/dir
+              - .:/usr/src/app
 
     mysql-db:
         image: mysql:5.7.31
