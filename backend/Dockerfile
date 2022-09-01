@@ -1,6 +1,6 @@
 FROM node:alpine
 
-WORKDIR /usr/src/estabelesis
+WORKDIR /usr/src/app
 
 COPY package*.json  ./
 
